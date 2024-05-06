@@ -77,3 +77,4 @@ public class dinmorhaha : MonoBehaviour
 }
 
 //Du er er en dejlig mand sebastian
+//I lige måde besse
