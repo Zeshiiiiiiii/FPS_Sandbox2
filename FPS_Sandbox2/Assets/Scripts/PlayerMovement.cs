@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    public float health;
+
     //Assingables
     public Transform playerCam;
     public Transform orientation;
@@ -265,6 +267,23 @@ public class PlayerMovement : MonoBehaviour {
 
     private void StopGrounded() {
         grounded = false;
+    }
+    private void OnCollisionEnter(Collision collision){
+        if (collision.gameObject.name == "enemy(Clone)"){
+            health -= 5;
+        }
+        else if (collision.gameObject.name == "healthPacket(Clone)"){
+            if (health + 10 > 100){
+                health = 100;
+            }
+            else{
+                health += 10;
+            }
+            Destroy(collision.gameObject);
+        }
+    }
+    public float returnHealth(){
+        return health;
     }
 
 }
