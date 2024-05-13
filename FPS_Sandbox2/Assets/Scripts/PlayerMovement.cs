@@ -46,8 +46,10 @@ public class PlayerMovement : MonoBehaviour {
 
     //Sliding
     private Vector3 normalVector = Vector3.up;
-    private Vector3 wallNormalVector;
 
+
+    private Vector3 wallNormalVector;
+    private float fixedDeltaTime;
     void Awake() {
         rb = GetComponent<Rigidbody>();
     }
@@ -56,14 +58,16 @@ public class PlayerMovement : MonoBehaviour {
         playerScale =  transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        fixedDeltaTime = Time.deltaTime;
     }
 
 
     private void FixedUpdate() {
-        Movement();
+       Movement();
     }
 
     private void Update() {
+        
         MyInput();
         Look();
     }
@@ -99,7 +103,7 @@ public class PlayerMovement : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
     }
 
-    private void Movement() {
+    public void Movement() {
         //Extra gravity
         rb.AddForce(Vector3.down * Time.deltaTime * 10);
 
@@ -141,8 +145,8 @@ public class PlayerMovement : MonoBehaviour {
         if (grounded && crouching) multiplierV = 0f;
 
         //Apply forces to move player
-        rb.AddForce(orientation.transform.forward * y * moveSpeed * Time.deltaTime * multiplier * multiplierV);
-        rb.AddForce(orientation.transform.right * x * moveSpeed * Time.deltaTime * multiplier);
+        rb.AddForce(orientation.transform.forward * y * moveSpeed * fixedDeltaTime * multiplier * multiplierV);
+        rb.AddForce(orientation.transform.right * x * moveSpeed * fixedDeltaTime * multiplier);
     }
 
     private void Jump() {
