@@ -1,6 +1,7 @@
 // Some stupid rigidbody based movement by Dani
 
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
 
     //Input
     float x, y;
-    bool jumping, sprinting, crouching;
+    public bool jumping, sprinting, crouching, wallrun;
 
     //Sliding
     private Vector3 normalVector = Vector3.up;
@@ -310,5 +311,8 @@ public class PlayerMovement : MonoBehaviour {
     public float returnHealth(){
         return health;
     }
+    /*public bool isWallrunning(){
+        return wallrun;
+    }*/
 
 }
