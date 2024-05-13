@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour {
         
         MyInput();
         Look();
+        
     }
 
     /// <summary>
@@ -80,6 +81,14 @@ public class PlayerMovement : MonoBehaviour {
         y = Input.GetAxisRaw("Vertical");
         jumping = Input.GetButton("Jump");
         crouching = Input.GetKey(KeyCode.LeftControl);
+        if(Input.GetKeyDown(KeyCode.LeftShift)){
+            sprinting = true;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift)){
+            sprinting = false;
+        }
+
+        
 
         //Crouching
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -105,7 +114,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Movement() {
         //Extra gravity
-        rb.AddForce(Vector3.down * Time.deltaTime * 10);
+        rb.AddForce(Vector3.down * fixedDeltaTime * 10);
 
         //Find actual velocity relative to where player is looking
         Vector2 mag = FindVelRelativeToLook();
@@ -117,12 +126,24 @@ public class PlayerMovement : MonoBehaviour {
         //If holding jump && ready to jump, then jump
         if (readyToJump && jumping) Jump();
 
+        //Some multipliers
+        float multiplier = 1f, multiplierV = 1f;
+
         //Set max speed
         float maxSpeed = this.maxSpeed;
+        if(sprinting){
+            maxSpeed *= 5f;
+            multiplier = 5f;
+            multiplierV = 5f;
+        }
+        if (sprinting == false){
+            maxSpeed = this.maxSpeed;
+        }
+
 
         //If sliding down a ramp, add force down so player stays grounded and also builds speed
         if (crouching && grounded && readyToJump) {
-            rb.AddForce(Vector3.down * Time.deltaTime * 3000);
+            rb.AddForce(Vector3.down * fixedDeltaTime * 3000);
             return;
         }
 
@@ -132,18 +153,18 @@ public class PlayerMovement : MonoBehaviour {
         if (y > 0 && yMag > maxSpeed) y = 0;
         if (y < 0 && yMag < -maxSpeed) y = 0;
 
-        //Some multipliers
-        float multiplier = 1f, multiplierV = 1f;
+        
 
         // Movement in air
         if (!grounded) {
             multiplier = 0.5f;
             multiplierV = 0.5f;
         }
+        
 
         // Movement while sliding
         if (grounded && crouching) multiplierV = 0f;
-
+        
         //Apply forces to move player
         rb.AddForce(orientation.transform.forward * y * moveSpeed * fixedDeltaTime * multiplier * multiplierV);
         rb.AddForce(orientation.transform.right * x * moveSpeed * fixedDeltaTime * multiplier);
@@ -195,16 +216,16 @@ public class PlayerMovement : MonoBehaviour {
 
         //Slow down sliding
         if (crouching) {
-            rb.AddForce(moveSpeed * Time.deltaTime * -rb.velocity.normalized * slideCounterMovement);
+            rb.AddForce(moveSpeed * fixedDeltaTime * -rb.velocity.normalized * slideCounterMovement);
             return;
         }
 
         //Counter movement
         if (Math.Abs(mag.x) > threshold && Math.Abs(x) < 0.05f || (mag.x < -threshold && x > 0) || (mag.x > threshold && x < 0)) {
-            rb.AddForce(moveSpeed * orientation.transform.right * Time.deltaTime * -mag.x * counterMovement);
+            rb.AddForce(moveSpeed * orientation.transform.right * fixedDeltaTime * -mag.x * counterMovement);
         }
         if (Math.Abs(mag.y) > threshold && Math.Abs(y) < 0.05f || (mag.y < -threshold && y > 0) || (mag.y > threshold && y < 0)) {
-            rb.AddForce(moveSpeed * orientation.transform.forward * Time.deltaTime * -mag.y * counterMovement);
+            rb.AddForce(moveSpeed * orientation.transform.forward * fixedDeltaTime * -mag.y * counterMovement);
         }
 
         //Limit diagonal running. This will also cause a full stop if sliding fast and un-crouching, so not optimal.
@@ -265,7 +286,7 @@ public class PlayerMovement : MonoBehaviour {
         float delay = 3f;
         if (!cancellingGrounded) {
             cancellingGrounded = true;
-            Invoke(nameof(StopGrounded), Time.deltaTime * delay);
+            Invoke(nameof(StopGrounded), fixedDeltaTime * delay);
         }
     }
 

@@ -38,16 +38,14 @@ public class SlowMotion : MonoBehaviour
         if(Time.time > forcedSlomoStop){
             stopSlowMotion();
         }
-        Debug.Log("Time: " + Time.time + " \n forced slomo stop: " + forcedSlomoStop);
+        //Debug.Log("Time: " + Time.time + " \n forced slomo stop: " + forcedSlomoStop);
     }
     private void startSlowMotion(){
-        Debug.Log("slomo started");
         movementScript.Movement();
         Time.timeScale = slowMotionTimeScale;
         Time.fixedDeltaTime = normalFixedDeltaTime * slowMotionTimeScale;
     }
     private void stopSlowMotion(){
-        Debug.Log("slomo stopped");
         Time.timeScale = normalTimeScale;
         Time.fixedDeltaTime = normalFixedDeltaTime;
     }
