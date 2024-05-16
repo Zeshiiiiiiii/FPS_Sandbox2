@@ -64,13 +64,13 @@ public class gameManager : MonoBehaviour
     void spawnEnemy(){
         if (numberOfEnemys <= howManyEnemys - 1)
         {
-            Vector3 spawnPosition = new Vector3(Random.Range(-10, 11), 5, Random.Range(-10, 11));
+            Vector3 spawnPosition = new Vector3(Random.Range(155, 175), 5, Random.Range(200, 220));
             Instantiate(enemy, spawnPosition, Quaternion.identity);
         }
     }
     void spawnHealthPacket(){
         if (numberOfHealthPacket <= howManyHealthPacket - 1){
-            Vector3 spawnPosition = new Vector3(Random.Range(-10, 11), 5, Random.Range(-10, 11));
+            Vector3 spawnPosition = new Vector3(Random.Range(155, 175), 5, Random.Range(200, 220));
             Instantiate(healthPacket, spawnPosition, Quaternion.identity);
         }
     }

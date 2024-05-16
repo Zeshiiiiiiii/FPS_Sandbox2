@@ -42,7 +42,7 @@ public class EnemyMovements : MonoBehaviour
 
         if (targetTime < 0.0f)
         {
-            Vector3 targetPosition = new Vector3(Random.Range(-50, 51), Random.Range(-50, 51));
+            Vector3 targetPosition = new Vector3(Random.Range(135, 205), 5, Random.Range(150, 270));
             agent.SetDestination(targetPosition);
             targetTime = 5f;
         }

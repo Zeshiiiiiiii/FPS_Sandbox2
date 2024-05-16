@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1907245728609543836, guid: a12282c81400ee54383e9af475d80a93, type: 3}
   healthPacket: {fileID: 8352625323289421313, guid: a4f55017b8210b34a9006b746e57f119, type: 3}
-  howManyEnemys: 0
-  howManyHealthPacket: 0
+  howManyEnemys: 5
+  howManyHealthPacket: 2
   healthBar: {fileID: 620088337}
   movementScript: {fileID: 1279010256}
 --- !u!4 &30919079
