@@ -8,6 +8,7 @@ public class GrapplingGun : MonoBehaviour
    public Transform gunTip, cam, player;
    private float maxDistance = 100f;
    private SpringJoint joint;
+   public ParticleSystem muzzleFlash;
 
    void Awake(){
         lr = GetComponent<LineRenderer>();
@@ -72,13 +73,15 @@ public class GrapplingGun : MonoBehaviour
    }
 
    void Shoot() {
+     
      Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
      RaycastHit hit;
 
+     muzzleFlash.Play();  
+
      if(Physics.Raycast(ray, out hit, 100)){
           if(hit.transform.name == "enemy(Clone)"){
-          //Debug.Log(hit.transform.gameObject.name);
           Destroy(hit.transform.gameObject);
           }
      }
