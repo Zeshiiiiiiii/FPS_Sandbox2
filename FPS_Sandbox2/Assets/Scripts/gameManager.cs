@@ -32,18 +32,6 @@ public class gameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        if(Input.GetMouseButtonDown(0)){
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit;
-
-            if(Physics.Raycast(ray, out hit, 100)){
-                if(hit.transform.name == "enemy(Clone)"){
-                    //Debug.Log(hit.transform.gameObject.name);
-                    Destroy(hit.transform.gameObject);
-                }
-            }
-        }
         numberOfHealthPacket = GameObject.FindGameObjectsWithTag("healthPack").Count();
         numberOfEnemys = GameObject.FindGameObjectsWithTag("enemy").Count();
         //health = movementScript.returnHealth();

@@ -14,11 +14,14 @@ public class GrapplingGun : MonoBehaviour
    }
 
    void Update(){
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(1)) {
             StartGrapple();
         }
-        else if (Input.GetMouseButtonUp(0)){
+        else if (Input.GetMouseButtonUp(1)){
             StopGrapple();
+        }
+        else if (Input.GetMouseButtonDown(0)) {
+          Shoot();
         }
    }
 
@@ -66,5 +69,19 @@ public class GrapplingGun : MonoBehaviour
 
    public Vector3 GetGrapplePoint(){
         return grapplePoint;
+   }
+
+   void Shoot() {
+     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+     RaycastHit hit;
+
+     if(Physics.Raycast(ray, out hit, 100)){
+          if(hit.transform.name == "enemy(Clone)"){
+          //Debug.Log(hit.transform.gameObject.name);
+          Destroy(hit.transform.gameObject);
+          }
+     }
+        
    }
 }
